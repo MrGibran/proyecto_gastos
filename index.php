@@ -27,7 +27,7 @@
     $fEnero = $i[0]-$e[0];
     
     for($mes=0; $mes<=11;++$mes){
-        echo $i[$mes]-$e[$mes];
+        echo $i[$mes]+$e[$mes];
         echo "<br>";
     }
 ?>
@@ -54,7 +54,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td> <?php echo $MovimientosMes[date('n')-2]["movimientos"]["ingreso"] - $MovimientosMes[date('n')-2]["movimientos"]["egreso"];?></td>
+                    <td> <?php echo $MovimientosMes[date('n')-2]["movimientos"]["ingreso"] + $MovimientosMes[date('n')-2]["movimientos"]["egreso"];?></td>
                     <td>$ <?php echo $MovimientosMes[date('n')-1]["movimientos"]["ingreso"];?></td>
                     <td>$ <?php echo $MovimientosMes[date('n')-1]["movimientos"]["egreso"];?></td>
                     <td></td>
