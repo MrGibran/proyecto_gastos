@@ -9,6 +9,7 @@
         }
         return $arrayIngresos;
     }
+
     function egresosMes($conn){
         $arrayEgresos = array();    //<- array para almacenar la suma del total de Egresos por mes
         for($mes=1; $mes<=12;++$mes){
@@ -114,5 +115,32 @@
     function mesActualEsp(){
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         echo $meses[date('n')-1];
+    }
+    // Para ver el saldo de la tarjeta de credito al dia de hoy segun date ();
+    function saldoHoy($conn)
+    {
+        
+        $diaPruebas = date('o-m-d');
+        $sql = "SELECT SUM(cantidad) FROM ingreso_egreso where fecha BETWEEN '2022-01-31' AND '$diaPruebas'";
+        $result = mysqli_query($conn, $sql);
+        $data = mysqli_fetch_row ($result);
+        $valor = round((float) $data[0],2 );
+        return $valor;
+    }
+
+    // funcion que devuelve los tipos de cuenta que hay
+    function consultaTipoCuentas($conn){
+        $sql = "SELECT DISTINCT tipo FROM cuenta";
+        $result = mysqli_query($conn, $sql);
+        $data = mysqli_fetch_all ($result, MYSQLI_NUM);
+        return $data;
+
+    }
+    function consultaCuentas($conn,$string){
+        $sql = "SELECT *  FROM cuenta WHERE tipo = '$string'";
+        $result = mysqli_query($conn, $sql);
+        $data = mysqli_fetch_all ($result, MYSQLI_NUM);
+        return $data;
+
     }
 ?>

@@ -8,28 +8,13 @@
     $sqlSumEgreso = "SELECT SUM(cantidad) FROM  ingreso_egreso where tipo = 'Egreso'";
     $sqlSumIngreso = "SELECT SUM(cantidad) FROM  ingreso_egreso where tipo = 'Ingreso'";
 
+    //agarrar el ultimo dia la sum de la cantida de egreso 
+    //SELECT SUM(cantidad) FROM ingreso_egreso where fecha BETWEEN '2022-01-31' AND '2022-05-31' && tipo = 'Egreso';
+
     //consulta de los totales globales mediante el uso de funciones
     $totalIngresos = consultaSuma($conn,$sqlSumIngreso); //<- Suma del total de Ingresos
     $totalEgresos = consultaSuma($conn,$sqlSumEgreso);   //<- Suma del total de Egresos
     $MovimientosMes = consultaArray($conn);   //<- Array con la sum de egresos y ingresos por mes
-
-    
-
-    $i = ingresosMes($conn);
-    $e = egresosMes($conn);
-
-    //var_dump($i);
-    //var_dump($e);
-
-    $arrayInicio = array();
-    $arrayFinal = array();
-
-    $fEnero = $i[0]-$e[0];
-    
-    for($mes=0; $mes<=11;++$mes){
-        echo $i[$mes]+$e[$mes];
-        echo "<br>";
-    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -40,9 +25,16 @@
     <title>Home</title>
 </head>
 <body>
+  <nav>
+    <ul>
+      <li><a href="#">Menu</a></li>
+      <li><a href="registrar.php">Registrar</a></li>
+    </ul>
+  </nav>
     <div>
         <h1>Mes actual: <?php echo mesActualEsp();?></h1>
         <h2>Debito</h2>
+        <h2>Saldo al dia de hoy: $<?php echo saldoHoy($conn);?></h2>
         <table>
             <thead>
                 <tr>
@@ -54,6 +46,7 @@
             </thead>
             <tbody>
                 <tr>
+                    
                     <td> <?php echo $MovimientosMes[date('n')-2]["movimientos"]["ingreso"] + $MovimientosMes[date('n')-2]["movimientos"]["egreso"];?></td>
                     <td>$ <?php echo $MovimientosMes[date('n')-1]["movimientos"]["ingreso"];?></td>
                     <td>$ <?php echo $MovimientosMes[date('n')-1]["movimientos"]["egreso"];?></td>
